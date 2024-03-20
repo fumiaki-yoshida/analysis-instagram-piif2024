@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+bin/format --check src tests
+
+exec poetry run dvc git-hook pre-commit $@

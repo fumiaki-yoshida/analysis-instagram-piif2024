@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+if [[ "$#" != 1 ]]; then
+  echo "Usage: $0 <project-name>" >&2
+  exit 1
+fi
+
+ROOTDIR=$(dirname $0)/../..
+
+PROJECT_NAME=$1
+shift
+
+sed -i '' "s/analysis-workspace/$PROJECT_NAME/g" $ROOTDIR/pyproject.toml
+echo "pyproject.toml has been successfully configured as a project '${PROJECT_NAME}'."
+
+sed -i '' "s/__PROJECT_NAME__/$PROJECT_NAME/g" $ROOTDIR/config.sh
+echo "config.sh has been successfully configured as a project '${PROJECT_NAME}'."

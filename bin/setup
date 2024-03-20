@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+echo "Updating Git submodules..."
+git submodule update --init
+echo "    => OK"
+
+echo "Configuring Git hooks:"
+CONFIGURE_HOOKS="git config core.hooksPath githooks"
+echo "  $CONFIGURE_HOOKS"
+$CONFIGURE_HOOKS
+echo "    => OK"
+
+echo "Installing dependencies..."
+poetry install
+echo "    => OK"
+
+echo "This project has been successfully set up. Now good to go 🚀"

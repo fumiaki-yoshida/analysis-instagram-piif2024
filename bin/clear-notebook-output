@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+ROOT_DIR=$(cd $(dirname $0)/..; pwd)
+
+if [ "$#" -eq 0 ]; then
+  NOTEBOOKS=$(find $ROOT_DIR -name \*.ipynb -not -path "$ROOT_DIR/.ipynb_checkpoints/*")
+else
+  NOTEBOOKS="$@"
+fi
+
+poetry run jupyter nbconvert --clear-output --inplace $NOTEBOOKS

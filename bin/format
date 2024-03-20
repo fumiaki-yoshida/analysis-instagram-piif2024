@@ -1,0 +1,10 @@
+#!/bin/sh
+
+ARGS="$@"
+
+if [[ "$#" -eq 0 ]]; then
+  ARGS="src tests" # Default targets
+fi
+
+echo "Formatting code..."
+poetry run black $ARGS

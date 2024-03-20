@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+if [[ "$#" != 1 ]]; then
+  echo "Usage: $0 <project-name>" >&2
+  exit 1
+fi
+
+INITDIR=$(dirname $0)/init
+
+PROJECT_NAME=$1
+shift
+
+echo "Configuring project..."
+$INITDIR/configure-project $PROJECT_NAME
+
+echo "Installing dependencies..."
+poetry install
+
+echo "Configuring DVC..."
+$INITDIR/configure-dvc $PROJECT_NAME
+
+echo "All configurations have been successfully updated. Enjoy 🚀"

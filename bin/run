@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+cd $(dirname $0)/.. # Run in the project root
+
+function printUsage {
+  echo "$0 <script name>" >&2
+}
+
+function listCommands {
+  AVAILABLE_COMMANDS=$(find tools/bin -type f -maxdepth 1 -not -name '.*' -not -name '_*' -exec basename \{\} \; | sort | xargs echo)
+  echo "Available commands: $AVAILABLE_COMMANDS"
+}
+
+if [ "$#" -gt 1 ]; then
+  printUsage
+  exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+  listCommands
+  exit
+fi
+
+. config.sh
+. tools/bin/_validate-config
+
+COMMAND=$1
+shift
+EXECUTABLE=tools/bin/$COMMAND
+
+if ! [ -x $EXECUTABLE ]; then
+  echo "\"$COMMAND\" is invalid. Please choose one of the available commands." >&2
+  listCommands
+  exit 1
+fi
+
+$EXECUTABLE

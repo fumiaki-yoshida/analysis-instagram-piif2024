@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    registries:
+      - github-private-repos
+    insecure-external-code-execution: allow
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "11:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
+registries:
+  github-private-repos:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{secrets.BOT_PERSONAL_ACCESS_TOKEN_FOR_PRIVATE_REPOS}}

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+if [[ "$#" != 1 ]]; then
+  echo "Usage: $0 <project-name>" >&2
+  exit 1
+fi
+
+REMOTE=storage
+STORAGE_PREFIX=s3://data.ds.newrope.biz/dvc/
+
+DVC="poetry run dvc"
+
+PROJECT_NAME=$1
+shift
+
+STORAGE=${STORAGE_PREFIX}${PROJECT_NAME}
+
+echo "Adding '$STORAGE' as remote '$REMOTE'..."
+$DVC remote add $REMOTE $STORAGE
+echo "Marking '$REMOTE' as a default remote..."
+$DVC remote default $REMOTE
+
+echo DVC has been successfully configured.
+echo This project will use $STORAGE as a default remote.
