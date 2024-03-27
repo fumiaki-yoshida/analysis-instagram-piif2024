@@ -24,11 +24,7 @@ def test_add_new_labels():
     assert make_dataset._add_new_labels(dummy_columns,"bag_クリア") == ["bag_エコバッグ","bag_キャンパス","bag_クリア"]
 
 
-def test_make_labels_DataFrame():
-    assert make_dataset._add_boolean()
-
-
-def test_remove_item_number():
-    assert make_dataset._remove_item_number("top_1")=="top"
-    assert make_dataset._remove_item_number("top_2")=="top"
-    assert make_dataset._remove_item_number("top_3")=="top"
+def test_remove_category_number():
+    assert make_dataset._remove_category_number("top_1")=="top"
+    assert make_dataset._remove_category_number("top_2")=="top"
+    assert make_dataset._remove_category_number("top_3")=="top"
