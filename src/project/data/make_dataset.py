@@ -21,6 +21,16 @@ def _remove_category_number(label):
     return re.sub("([a-z]+)_[0-9]", r"\1", label)
 
 
+def prepare_feature_list(row):
+    label_list = _split_label_names(row["label_list"])
+    category = _remove_category_number(row["category"])
+    feature_list = []
+    for label in label_list:
+        new_fearure = category + "_" + label
+        feature_list.append(new_fearure)
+    return feature_list
+
+
 class RecognizedData:
     def __init__(self, path):
         self.df = pd.read_csv(path)

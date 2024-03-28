@@ -43,3 +43,8 @@ def test_remove_category_number():
     assert make_dataset._remove_category_number("top_2") == "top"
     assert make_dataset._remove_category_number("bottoms_3") == "bottoms"
     assert make_dataset._remove_category_number("bottoms_10") != "bottoms"
+
+
+def test_prepare_feature_list():
+    row = {"label_list": "ギンガムチェック/グレー", "category": "tops_1"}
+    assert ["tops_ギンガムチェック", "tops_グレー"] == make_dataset.prepare_feature_list(row)
