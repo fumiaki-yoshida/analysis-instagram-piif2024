@@ -30,6 +30,11 @@ def prepare_feature_list(row):
         feature_list.append(new_fearure)
     return feature_list
 
+def convert_feature_dict2feature_DataFrame(feature_dictionary):
+    feature_series = pd.Series(feature_dictionary)
+    return pd.get_dummies(feature_series.explode()).groupby(level=0).sum()
+
+
 
 class RecognizedData:
     def __init__(self, path):

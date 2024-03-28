@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from src.project.data import make_dataset
 
 
@@ -48,3 +49,14 @@ def test_remove_category_number():
 def test_prepare_feature_list():
     row = {"label_list": "ギンガムチェック/グレー", "category": "tops_1"}
     assert ["tops_ギンガムチェック", "tops_グレー"] == make_dataset.prepare_feature_list(row)
+
+
+def test_feature_dict2featureDataFrame():
+    dammy_df = pd.DataFrame(columns=['a', 'b', 'c'],
+                            data=np.array([
+                                [1,1,1],
+                                [0,1,1],
+                                [0,0,1]
+                                      ]))
+    feature_dict={0:["a","b","c"],1:["b","c"],2:["c"]}
+    assert dammy_df.equals(make_dataset.convert_feature_dict2feature_DataFrame(feature_dict))
