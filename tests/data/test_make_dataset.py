@@ -47,16 +47,23 @@ def test_remove_category_number():
 
 
 def test_prepare_feature_list():
-    row = {"label_list": "ギンガムチェック/グレー", "category": "tops_1"}
+    row = {"label_names": "ギンガムチェック/グレー", "category": "tops_1"}
     assert ["tops_ギンガムチェック", "tops_グレー"] == make_dataset.prepare_feature_list(row)
 
 
+def test_make_feature_dict():
+    dummy_dict = {0: ["tops_a", "tops_b"], 1: ["bottoms_b"], 2: ["bottoms_c"]}
+    dummy_df = pd.DataFrame(
+        {"category": ["tops_1", "bottoms", "bottoms"], "label_names": ["a/b", "b", "c"]}
+    )
+    assert dummy_dict == make_dataset.make_feature_dict(dummy_df)
+
+
 def test_feature_dict2featureDataFrame():
-    dammy_df = pd.DataFrame(columns=['a', 'b', 'c'],
-                            data=np.array([
-                                [1,1,1],
-                                [0,1,1],
-                                [0,0,1]
-                                      ]))
-    feature_dict={0:["a","b","c"],1:["b","c"],2:["c"]}
-    assert dammy_df.equals(make_dataset.convert_feature_dict2feature_DataFrame(feature_dict))
+    dammy_df = pd.DataFrame(
+        columns=["a", "b", "c"], data=np.array([[1, 1, 1], [0, 1, 1], [0, 0, 1]])
+    )
+    feature_dict = {0: ["a", "b", "c"], 1: ["b", "c"], 2: ["c"]}
+    assert dammy_df.equals(
+        make_dataset.convert_feature_dict2feature_DataFrame(feature_dict)
+    )

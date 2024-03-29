@@ -22,7 +22,7 @@ def _remove_category_number(label):
 
 
 def prepare_feature_list(row):
-    label_list = _split_label_names(row["label_list"])
+    label_list = _split_label_names(row["label_names"])
     category = _remove_category_number(row["category"])
     feature_list = []
     for label in label_list:
@@ -30,10 +30,18 @@ def prepare_feature_list(row):
         feature_list.append(new_fearure)
     return feature_list
 
+
+def make_feature_dict(df: pd.DataFrame):
+    feature_dict = {}
+    for index, row in df.iterrows():
+        feature_list = prepare_feature_list(row)
+        feature_dict[index] = feature_list
+    return feature_dict
+
+
 def convert_feature_dict2feature_DataFrame(feature_dictionary):
     feature_series = pd.Series(feature_dictionary)
     return pd.get_dummies(feature_series.explode()).groupby(level=0).sum()
-
 
 
 class RecognizedData:
